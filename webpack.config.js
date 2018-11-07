@@ -11,21 +11,37 @@ module.exports = {
         filename: 'bundle.js',
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.css']
+        extensions: ['.js', '.jsx', '.json', '.less']
     },
     module : {
         rules : [
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
+
             {
                 test: /\.png$/,
                 loader: 'url-loader?limit=100000&minetype=image/png'
             },
             {
-                test: /\.jpg/,
+                test: /\.jpg$/,
                 loader: 'file-loader'
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: "[local]___[hash:base64:5]"
+                        }
+                    },
+                    {
+                        loader: "less-loader"
+                    }
+                ]
             },
             {
                 test : /\.jsx?/,
